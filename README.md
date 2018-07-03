@@ -2,7 +2,7 @@
 
 ## Solo project with the intention of building a Trello clone
 
-[Try it out!, coming soon]()
+[Try it out! Coming soon]()
 
 ### Orobosa
 

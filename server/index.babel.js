@@ -1,7 +1,10 @@
+import './db';
+
 const path = require('path');
 const express = require('express');
 
-const DIST_DIR = path.join(__dirname, 'dist');
+
+const DIST_DIR = path.join(__dirname, '../dist');
 const PORT = 8000;
 const app = express();
 
