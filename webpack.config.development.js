@@ -12,7 +12,9 @@ module.exports = {
   mode: 'development',
   context: CLIENT_DIR,
   entry: {
-    app: './index.js',
+    app: [
+      './index.js',
+    ],
     vendor: [
       '@material-ui/core',
     ],
@@ -20,9 +22,14 @@ module.exports = {
   output: {
     filename: 'js/bundle.[hash].js',
     path: DIST_DIR,
-    publicPath: '/',
   },
   devtool: 'inline-source-map',
+  watchOptions: {
+    ignored: [
+      /node_modules/,
+      /server/,
+    ],
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
   },
@@ -57,7 +64,6 @@ module.exports = {
     host: 'localhost',
     port,
     historyApiFallback: true,
-    open: true,
     contentBase: DIST_DIR,
     hot: true,
   },
@@ -73,6 +79,7 @@ module.exports = {
       },
     },
   },
+  watch: true,
   plugins: [
     new HtmlWebpackPlugin({
       template: 'public/index.html',

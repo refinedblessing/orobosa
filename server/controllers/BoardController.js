@@ -13,7 +13,7 @@ const BoardController = {
     const { title } = req.body;
     const newBoard = new Board({ title });
     newBoard.save((err, board) => {
-      if (err) return next(err);
+      if (err) return res.status(404).send(err);
       if (!board) return res.sendStatus(400);
       return res.status(200).send(board);
     });
@@ -36,11 +36,13 @@ const BoardController = {
     });
   },
   getAll: (req, res, next) => {
-    Board.find({}, (err, boards) => {
-      if (err) return next(err);
-      if (!boards) return res.sendStatus(400);
-      return res.status(200).send(boards);
-    });
+    Board.find({})
+      .sort('-created_at')
+      .exec((err, boards) => {
+        if (err) return next(err);
+        if (!boards) return res.sendStatus(400);
+        return res.status(200).send(boards);
+      });
   },
 };
 
