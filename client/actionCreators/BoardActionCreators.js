@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as actionTypes from '../actionTypes/BoardActionTypes';
 
-const url = '/boards';
+const url = '/api/boards';
 
 export const addBoard = board => dispatch =>
   axios.post(url, board).then(newBoard => dispatch({

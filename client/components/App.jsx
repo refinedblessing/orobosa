@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import BoardContainer from '../containers/BoardContainer.jsx';
+import UserContainer from '../containers/UserContainer.jsx';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <BoardContainer />
+        <UserContainer />
       </div>
     )
   }

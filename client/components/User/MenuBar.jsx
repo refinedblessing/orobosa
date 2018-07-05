@@ -27,12 +27,12 @@ const styles = {
 
 class MenuBar extends React.Component {
   state = {
-    auth: true,
     anchorEl: null,
   };
 
   handleChange = (event, checked) => {
-    this.setState({ auth: checked });
+    if (!checked) this.props.logout();
+    else this.props.login();
   };
 
   handleMenu = event =>
@@ -43,8 +43,11 @@ class MenuBar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { auth, anchorEl } = this.state;
+    const {
+      classes, isAuthenticated, picture, login, logout
+    } = this.props;
+    const auth = isAuthenticated;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (

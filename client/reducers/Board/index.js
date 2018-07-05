@@ -1,5 +1,5 @@
 import * as boardActionTypes from '../../actionTypes/BoardActionTypes';
-import utils from './util';
+import utils from './utils';
 
 const {
   addBoard, getBoard, getAllBoards, updateBoard, deleteBoard,

@@ -1,32 +1,36 @@
 import path from 'path';
-import express, { Router } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
-import './db';
-import BoardController from './controllers/BoardController';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
+import './db';
+import router from './routes/index';
 
 const DIST_DIR = path.join(__dirname, '../dist');
 const PORT = 8000;
 const app = express();
 
+const corsOption = {
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token'],
+};
+
+app.use(cors(corsOption));
+app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
+
 app.use(express.static(DIST_DIR));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 
-// Board Routes
-const boardRouter = Router();
-
-boardRouter.get('/', BoardController.getAll);
-boardRouter.post('/', BoardController.post);
-boardRouter.get('/:id', BoardController.get);
-boardRouter.patch('/:id', BoardController.update);
-boardRouter.put('/:id', BoardController.update);
-boardRouter.delete('/:id', BoardController.delete);
-
-app.use('/boards', boardRouter);
+app.use('/', router);
 
 app.listen(PORT);
