@@ -11,6 +11,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Icon from '@material-ui/core/Icon';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = {
   root: {
@@ -22,6 +23,9 @@ const styles = {
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+  },
+  avatar: {
+    margin: 10,
   },
 };
 
@@ -44,7 +48,7 @@ class MenuBar extends React.Component {
 
   render() {
     const {
-      classes, isAuthenticated, picture, login, logout
+      classes, isAuthenticated, picture, login, logout, name
     } = this.props;
     const auth = isAuthenticated;
     const { anchorEl } = this.state;
@@ -62,9 +66,6 @@ class MenuBar extends React.Component {
         </FormGroup>
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <Icon>menu</Icon>
-            </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
               Orobosa
             </Typography>
@@ -76,25 +77,12 @@ class MenuBar extends React.Component {
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  <Icon>account_circle</Icon>
+
+                {
+                  picture ? <Avatar alt="User Img" src={picture} className={classes.avatar} /> :
+                  <Avatar>{name.charAt(0)}</Avatar>
+                }
                 </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                </Menu>
               </div>
             )}
           </Toolbar>

@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import passport from 'passport';
 import BoardController from '../controllers/BoardController';
 import UserController from '../controllers/UserController';
-import { generateToken, sendToken } from '../utils/token.utils';
+import { generateToken, sendToken, verifyToken } from '../utils/token.utils';
 import strategies from '../passport';
 
 strategies();
@@ -19,14 +19,13 @@ boardRouter.patch('/:id', BoardController.update);
 boardRouter.put('/:id', BoardController.update);
 boardRouter.delete('/:id', BoardController.delete);
 
-router.use('/api/boards', boardRouter);
+router.use('/api/boards', verifyToken, boardRouter);
 
-// User Routes
 const userRouter = Router();
 
 userRouter.get('/', UserController.get);
 
-router.use('/api/user', userRouter);
+router.use('/api/user', verifyToken, userRouter);
 
 // Authentication
 router.post(
@@ -41,5 +40,15 @@ router.post(
     return next();
   }, generateToken, sendToken,
 );
+
+// router.get('/api/logout', verifyToken, (req, res) => {
+//   res.send();
+// });
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.redirect('/');
+});
 
 export default router;

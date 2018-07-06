@@ -9,12 +9,10 @@ import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Board from '../components/Board';
-import MenuBar from '../components/User/MenuBar';
 import * as boardActionCreators from '../actionCreators/BoardActionCreators';
 
-const mapStateToProps = ({ boardsState, userState }) => ({
+const mapStateToProps = ({ boardsState }) => ({
   boardsState,
-  userState,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -23,11 +21,13 @@ const mapDispatchToProps = dispatch => ({
       dispatch({ type: 'ADDING_BOARDS' }),
       dispatch(boardActionCreators.addBoard(board)),
     ),
-  getAllBoards: () =>
-    bindActionCreators(
+  deleteBoard: (id, index) =>
+    dispatch(boardActionCreators.deleteBoard(id, index)),
+  getAllBoards: () => {
+    return bindActionCreators(
       dispatch({ type: 'GETTING_BOARDS' }),
       dispatch(boardActionCreators.getAllBoards()),
-    ),
+    )}
 });
 
 class BoardContainer extends Component {
@@ -37,6 +37,12 @@ class BoardContainer extends Component {
       newBoard: {
         title: '',
       },
+      user: {
+        name: '',
+        id: '',
+        email: '',
+      },
+      private: false,
     };
   }
 
@@ -60,7 +66,7 @@ class BoardContainer extends Component {
     const { boards } = this.props.boardsState;
     const { title } = this.state.newBoard;
     const boardsDisplay = boards.map((board, i) => (
-      <Board key={i} board={board} index={i} />
+      <Board key={i} board={board} index={i} delete={this.props.deleteBoard} />
     ));
 
     return (

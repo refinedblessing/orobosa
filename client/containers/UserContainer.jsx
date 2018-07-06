@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
 import MenuBar from '../components/User/MenuBar.jsx';
 import * as userActionCreators from '../actionCreators/UserActionCreators';
 import BoardContainer from './BoardContainer.jsx';
@@ -15,11 +13,16 @@ const mapStateToProps = ({ userState }) => ({ userState });
 const mapDispatchToProps = dispatch => ({
   logOut: () => dispatch(userActionCreators.logout()),
   logMeIn: () => dispatch(userActionCreators.logMeIn()),
+  getUser: () => dispatch(userActionCreators.getUser()),
   onFailure: error => dispatch({ type: 'ERROR', error }),
   onSuccessResponse: resp => dispatch(userActionCreators.login(resp)),
 });
 
 class UserContainer extends Component {
+  componentDidMount() {
+    this.props.getUser();
+  }
+
   render() {
     const { isAuthenticated, userDetails, wantsToLogin } = this.props.userState;
     const content = wantsToLogin ?
@@ -30,7 +33,7 @@ class UserContainer extends Component {
           onSuccess={this.props.onSuccessResponse}
           onFailure={this.props.onFailure}
         />
-      </Grid> : <BoardContainer />;
+      </Grid> : <BoardContainer user={userDetails}/>;
     return (
       <Grid>
         <MenuBar

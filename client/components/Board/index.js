@@ -37,7 +37,7 @@ function Board(props) {
         />
         </CardContent>
         <CardActions>
-          <Button
+          {/* <Button
             variant="fab"
             color="primary"
             style={{ width: 30, height: 30 }}
@@ -45,8 +45,8 @@ function Board(props) {
             <Icon>
               touch_app
             </Icon>
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             variant="fab"
             color="primary"
             style={{ width: 30, height: 30 }}
@@ -54,11 +54,12 @@ function Board(props) {
             <Icon>
               edit
             </Icon>
-          </Button>
+          </Button> */}
           <Button
             variant="fab"
             color="primary"
             style={{ width: 30, height: 30 }}
+            onClick={() => props.delete(props.board._id, props.index)}
           >
             <Icon>
               delete

@@ -6,13 +6,19 @@ const url = '/api/boards';
 export const addBoard = board => dispatch =>
   axios.post(url, board).then(newBoard => dispatch({
     type: actionTypes.ADD_BOARD,
-    board: newBoard,
+    board: newBoard.data,
   }));
 
-export const getBoard = id => ({
-  type: actionTypes.GET_BOARD,
-  id,
-});
+// export const getBoard = id => ({
+//   type: actionTypes.GET_BOARD,
+//   id,
+// });
+
+export const deleteBoard = (id, index) => dispatch =>
+  axios.delete(`${url}/${id}`).then(() => dispatch({
+    type: actionTypes.DELETE_BOARD,
+    index,
+  }));
 
 export const getAllBoards = () => dispatch =>
   axios.get(url).then(({ data }) => dispatch({
@@ -24,10 +30,4 @@ export const updateBoard = ({ id, name }) => ({
   type: actionTypes.UPDATE_BOARD,
   id,
   name,
-});
-
-export const deleteBoard = (id, index) => ({
-  type: actionTypes.DELETE_BOARD,
-  id,
-  index,
 });
