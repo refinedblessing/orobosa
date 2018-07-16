@@ -33,7 +33,7 @@ class UserContainer extends Component {
           onSuccess={this.props.onSuccessResponse}
           onFailure={this.props.onFailure}
         />
-      </Grid> : <BoardContainer user={userDetails}/>;
+      </Grid> : <BoardContainer user={this.props.userState.userDetails}/>;
     return (
       <Grid>
         <MenuBar

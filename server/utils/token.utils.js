@@ -21,8 +21,6 @@ module.exports = {
     return res.status(200).send(JSON.stringify(req.user));
   },
   verifyToken: (req, res, next) => {
-    console.log("fahuhgiaiga");
-    console.log(req.params);
     if (req.session.ssid) {
       jwt.verify(req.session.ssid, 'youraisemeup', (err, decoded) => {
         if (decoded.id) {

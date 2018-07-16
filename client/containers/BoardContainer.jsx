@@ -8,6 +8,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import Board from '../components/Board';
 import * as boardActionCreators from '../actionCreators/BoardActionCreators';
 
@@ -37,12 +39,6 @@ class BoardContainer extends Component {
       newBoard: {
         title: '',
       },
-      user: {
-        name: '',
-        id: '',
-        email: '',
-      },
-      private: false,
     };
   }
 
@@ -63,14 +59,20 @@ class BoardContainer extends Component {
   }
 
   render() {
-    const { boards } = this.props.boardsState;
+    const { boards, user = {} } = this.props.boardsState;
     const { title } = this.state.newBoard;
     const boardsDisplay = boards.map((board, i) => (
       <Board key={i} board={board} index={i} delete={this.props.deleteBoard} />
     ));
 
+    const boardName = user.name ? `${user.name}'s Boards` : 'Public Boards';
     return (
       <Grid>
+        <Paper elevation={1}>
+        <Typography variant="headline" component="h3">
+         {/* {boardName} */}
+        </Typography>
+      </Paper>
         <Grid
           container
           style={{ flexGrow: 1, marginTop: 30 }}

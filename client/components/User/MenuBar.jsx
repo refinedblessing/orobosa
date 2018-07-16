@@ -69,6 +69,9 @@ class MenuBar extends React.Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Orobosa
             </Typography>
+            <Typography variant="title" justify="end" color="inherit" className={classes.flex}>
+              {name ? `${name}'s Boards` : 'Public Boards'}
+            </Typography>
             {auth && (
               <div>
                 <IconButton
